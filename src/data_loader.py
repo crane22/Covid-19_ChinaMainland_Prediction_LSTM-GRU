@@ -22,7 +22,3 @@ def loadData():
     trainSet = dataset[:boundNum]
     testSet = dataset[boundNum:]
     return trainSet, testSet
-
-train, test = loadData()
-for row in train:
-    print(row)
