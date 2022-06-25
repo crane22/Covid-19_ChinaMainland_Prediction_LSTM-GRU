@@ -25,7 +25,7 @@ param = {
     # "ValidSetProportion" : 0.1,
     "TestSetProportion" : 0.1,
     
-    "InputDimension" : 33,
+    # "InputDimension" : 33,
     "OutputDimension" : 1,
 }
 pathWorkingDirectory = os.path.abspath(os.path.dirname(__file__)).rsplit('/', 1)[0]

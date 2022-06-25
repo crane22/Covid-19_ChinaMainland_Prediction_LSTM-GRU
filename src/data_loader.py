@@ -34,8 +34,6 @@ def loadData(datasetPath, sequenceLength, testProportion):
         dataX.append(_data_X[1])
         dataY.append([idx_data_Y[_data_X[0]][1]])
         ndate.append([date[_data_X[0] + sequenceLength]])
-    dataX = Variable(torch.Tensor(np.array(dataX)))
-    dataY = Variable(torch.Tensor(np.array(dataY)))
         
     testSize = int(len(dataX) * testProportion)
     trainSize = len(dataX) - testSize
@@ -45,9 +43,11 @@ def loadData(datasetPath, sequenceLength, testProportion):
         scaler.fit(trainX[i])
         trainX[i] = scaler.transform(trainX[i])
         trainY[i] = scaler.transform(trainY[i])
+    dataX = Variable(torch.Tensor(np.array(dataX)))
+    dataY = Variable(torch.Tensor(np.squeeze(np.array(dataY))))
     trainX = Variable(torch.Tensor(trainX))
-    trainY = Variable(torch.Tensor(trainY))
+    trainY = Variable(torch.Tensor(np.squeeze(trainY)))
     testX = Variable(torch.Tensor(np.array(dataX[trainSize:])))
-    testY = Variable(torch.Tensor(np.array(dataY[trainSize:])))
+    testY = Variable(torch.Tensor(np.squeeze(np.array(dataY[trainSize:]))))
     return label, index, ndate, dataX, dataY, trainX, trainY, testX, testY
 

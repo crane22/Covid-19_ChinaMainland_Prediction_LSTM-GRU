@@ -5,14 +5,14 @@ from torch import nn
 # from nni.retiarii.nn.pytorch import nn
 
 class RNN(nn.Module):
-    def __init__(self, output_size, input_size, hidden_size, num_layers, sequence_length, batch_size):
+    def __init__(self, output_size, input_size, hidden_size, num_layers):
         super(RNN, self).__init__()
         self.output_size = output_size
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        self.sequence_length = sequence_length
-        self.batch_size = batch_size
+        # self.sequence_length = sequence_length
+        # self.batch_size = batch_size
         
         # self.rnn = nn.LSTM(input_size,hidden_size,num_layers, batch_first=True)
         self.rnn = nn.GRU(input_size,hidden_size,num_layers, batch_first=True)
