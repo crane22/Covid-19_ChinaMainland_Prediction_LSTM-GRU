@@ -19,13 +19,13 @@ def slidingWindows(data, sequenceLength):
         y.append([_idx, _y])
     return x, y
 
-def loadData():
-    dataset = np.load(paths['Data'], allow_pickle=True)
+def loadData(datasetPath, sequenceLength, testProportion):
+    dataset = np.load(datasetPath, allow_pickle=True)
     date = dataset[0]
     label = dataset[1]
     data = dataset[2]
 
-    sequenceLength = hyper['SlideWindowSize']
+
     idx_data_X, idx_data_Y = slidingWindows(data, sequenceLength)
     random.shuffle(idx_data_X)
     index, dataX, dataY, ndate = [], [], [], []
@@ -37,7 +37,6 @@ def loadData():
     dataX = Variable(torch.Tensor(np.array(dataX)))
     dataY = Variable(torch.Tensor(np.array(dataY)))
         
-    testProportion = param['TestSetProportion']
     testSize = int(len(dataX) * testProportion)
     trainSize = len(dataX) - testSize
     trainX, trainY = np.array(dataX[:trainSize]), np.array(dataY[:trainSize])
@@ -50,5 +49,5 @@ def loadData():
     trainY = Variable(torch.Tensor(trainY))
     testX = Variable(torch.Tensor(np.array(dataX[trainSize:])))
     testY = Variable(torch.Tensor(np.array(dataY[trainSize:])))
-    return index, ndate, dataX, dataY, trainX, trainY, testX, testY
+    return label, index, ndate, dataX, dataY, trainX, trainY, testX, testY
 

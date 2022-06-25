@@ -15,8 +15,12 @@ if __name__ == "__main__":
     learningRate = hyper['LearningRate']
     batchSize = hyper['BatchSize']
     
-    sequenceLength
+    sequenceLength = hyper['SlideWindowSize']
     hiddenSize = hyper['HiddenLayers']
     numLayers = hyper['NumLayers']
     inputSize = param['InputDimension']
     outputSize = param['OutputDimension']
+    
+    datasetPath = paths['Data']
+    testProportion = param['TestSetProportion']
+    preloadModelFlag = param['PreloadModelFile']
