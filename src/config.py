@@ -2,10 +2,14 @@
 # -*- encoding: utf-8 -*-
 
 import os
-
+# import nni
+# hyper = nni.get_next_parameter()
 hyper = {
+    "BatchSize" : 100,
     "SlideWindowSize" : 20,
-    # "BatchSize" : 100,
+    "HiddenLayers" : 10,
+    "NumLayers" : 2,
+    
 }
 
 param = {
@@ -17,6 +21,9 @@ param = {
     "PreloadModelFile" : False,
     # "ValidSetProportion" : 0.1,
     "TestSetProportion" : 0.1,
+    
+    "InputDimension" : 33,
+    "OutputDimension" : 1,
 }
 pathWorkingDirectory = os.path.abspath(os.path.dirname(__file__)).rsplit('/', 1)[0]
 paths = {
