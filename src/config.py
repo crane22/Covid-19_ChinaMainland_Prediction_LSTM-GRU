@@ -6,28 +6,27 @@ import os
 param = {
     "RawDataFolder" : "data/raw",
     "DataFolder" : "data",
-    "MainlandDataFileName" : "data_mainland.npy",
-    "ProvinceDataFileName" : "data_province.npy",
+    "DataFileName" : "data.npy",
     "OutputFolder" : "output",
     "OutputModelFileName" : "model.pth",
 
     "CurrentDataSource" : "mainland",               # mainland or province-Beijing
-    "CurrentDataType" : "confirmed",                # confirmed data only for provinces
+    "CurrentDataType" : "confirmed",                # confirmed/recovered data only for mainland data
 }
 
 hyper = {
     "PreloadModelFile" : False,
     # "ValidSetProportion" : 0.1,
-    "TestSetProportion" : 0.1
+    "TestSetProportion" : 0.1,
+    # "BatchSize" : 100,
+    
 }
 
 pathWorkingDirectory = os.path.abspath(os.path.dirname(__file__)).rsplit('/', 1)[0]
 paths = {
     "WorkingDirectory" : pathWorkingDirectory,
     "Data_Raw" : os.path.join(pathWorkingDirectory, param['RawDataFolder']),
-    "Data" : os.path.join(pathWorkingDirectory, param['DataFolder']),
-    "Data_Mainland" : os.path.join(pathWorkingDirectory, param['DataFolder'], param['MainlandDataFileName']),
-    "Data_Province" : os.path.join(pathWorkingDirectory, param['DataFolder'], param['ProvinceDataFileName']),
+    "Data" : os.path.join(pathWorkingDirectory, param['DataFolder'], param['DataFileName']),
     
     "Output_Model" : os.path.join(pathWorkingDirectory, param['OutputFolder'], param['OutputModelFileName']),
 }

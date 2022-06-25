@@ -11,40 +11,36 @@ def csvFile2List(csvFilePath):
     csvFile = open(csvFilePath, 'r')
     csvReader = csv.reader(csvFile)
     header = next(csvReader)
-    content = []
+    date = []
+    data = []
     for row in csvReader:
         if row == []:
             continue
         if len(row) == 2:
             row[0] = row[0][0:4] + '-' + row[0][4:6] + '-' + row[0][6:8]
+            date.append(row[0])
             row[1] = int(row[1])
-            content.append(row)
+            data.append([row[1]])
         if len(row) == 4:
-            if content == []:
-                content.append([])
-                content.append([])
             row[0] = row[0][0:4] + '-' + row[0][4:6] + '-' + row[0][6:8]
+            date.append(row[0])
             row[1] = int(row[1])
             row[2] = int(row[2])
-            content[0].append(row[0:2])
-            content[1].append(row[0:3:2])
-    return content
+            # row[3] = int(row[3])
+            # data.append([row[1], row[2], row[3]])
+            data.append([row[1], row[2]])
+    data = np.array(data)
+    return date, data
 
 if __name__ == "__main__":
-    csvFolderPath = paths['Data_Raw']
-
-    csvFilePath = os.path.join(csvFolderPath, "全国" + ".csv")
-    mainlandList = csvFile2List(csvFilePath)
-    mainlandData = {"confirmed" : mainlandList[0], 
-                    "recovered" : mainlandList[1]}
-    mainlandDictPath = paths['Data_Mainland']
-    np.save(mainlandDictPath, mainlandData)
-    
-    provincesData = {}
+    csvFilePath = os.path.join(paths['Data_Raw'], "全国" + ".csv")
+    date, data = csvFile2List(csvFilePath)
+    label = ["mainland-confirmed", "mainland-recovered"]
     for p in provinces:
         pName = provinces[p]
-        csvFilePath = os.path.join(csvFolderPath, p + ".csv")
-        pData = csvFile2List(csvFilePath)
-        provincesData.update({pName : pData})
-    provinceDictPath = paths['Data_Province']
-    np.save(provinceDictPath, provincesData)
+        label.append("province-" + pName)
+        csvFilePath = os.path.join(paths['Data_Raw'], p + ".csv")
+        _, pData = csvFile2List(csvFilePath)
+        data = np.concatenate((data, pData), axis=1)
+    dataset = np.array([date, label, data], dtype=object)
+    np.save(paths['Data'], dataset)
