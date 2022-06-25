@@ -5,13 +5,13 @@ import os
 # import nni
 # hyper = nni.get_next_parameter()
 hyper = {
-    "NumEpoch" : 30,
+    "NumEpoch" : 3000,
     "LearningRate" : 1e-3,
     "BatchSize" : 64,
     
     "SlideWindowSize" : 20,
     "HiddenLayers" : 10,
-    "NumLayers" : 2,
+    "NumLayers" : 1,
     
 }
 
@@ -21,18 +21,20 @@ param = {
     "DataFileName" : "data.npy",
     "OutputFolder" : "output",
     "OutputModelFileName" : "model.pth",
-    "PreloadModelFile" : False,
+    "OutputFigureFileName" : "result.png",
+    "PreloadModelFile" : True,
     # "ValidSetProportion" : 0.1,
     "TestSetProportion" : 0.1,
     
     # "InputDimension" : 33,
-    "OutputDimension" : 1,
+    "OutputDimension" : 33,
 }
 pathWorkingDirectory = os.path.abspath(os.path.dirname(__file__)).rsplit('/', 1)[0]
 paths = {
     "Data_Raw" : os.path.join(pathWorkingDirectory, param['RawDataFolder']),
     "Data" : os.path.join(pathWorkingDirectory, param['DataFolder'], param['DataFileName']),
     "Output_Model" : os.path.join(pathWorkingDirectory, param['OutputFolder'], param['OutputModelFileName']),
+    "Output_Figure" : os.path.join(pathWorkingDirectory, param['OutputFolder'], param['OutputFigureFileName']),
 }
 
 provinces = {
