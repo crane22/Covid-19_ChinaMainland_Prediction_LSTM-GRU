@@ -3,31 +3,25 @@
 
 import os
 
+hyper = {
+    "SlideWindowSize" : 20,
+    # "BatchSize" : 100,
+}
+
 param = {
     "RawDataFolder" : "data/raw",
     "DataFolder" : "data",
     "DataFileName" : "data.npy",
     "OutputFolder" : "output",
     "OutputModelFileName" : "model.pth",
-
-    "CurrentDataSource" : "mainland",               # mainland or province-Beijing
-    "CurrentDataType" : "confirmed",                # confirmed/recovered data only for mainland data
-}
-
-hyper = {
     "PreloadModelFile" : False,
     # "ValidSetProportion" : 0.1,
     "TestSetProportion" : 0.1,
-    # "BatchSize" : 100,
-    
 }
-
 pathWorkingDirectory = os.path.abspath(os.path.dirname(__file__)).rsplit('/', 1)[0]
 paths = {
-    "WorkingDirectory" : pathWorkingDirectory,
     "Data_Raw" : os.path.join(pathWorkingDirectory, param['RawDataFolder']),
     "Data" : os.path.join(pathWorkingDirectory, param['DataFolder'], param['DataFileName']),
-    
     "Output_Model" : os.path.join(pathWorkingDirectory, param['OutputFolder'], param['OutputModelFileName']),
 }
 
@@ -62,8 +56,8 @@ provinces = {
     '新疆': 'Xinjiang',
     '云南': 'Yunnan',
     '浙江': 'Zhejiang',
-    '重庆': 'Chongqing'
-    # ,'香港': 'HongKong',
+    '重庆': 'Chongqing',
+    # '香港': 'HongKong',
     # '澳门': 'Macao',
     # '台湾': 'Taiwan',
     # '南海诸岛': 'South China Sea Islands'
