@@ -5,7 +5,10 @@ import os
 # import nni
 # hyper = nni.get_next_parameter()
 hyper = {
-    "BatchSize" : 100,
+    "NumEpoch" : 30,
+    "LearningRate" : 1e-3,
+    "BatchSize" : 64,
+    
     "SlideWindowSize" : 20,
     "HiddenLayers" : 10,
     "NumLayers" : 2,

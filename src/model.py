@@ -7,13 +7,13 @@ from torch import nn
 import torch.nn.functional as F
 
 class RNN(nn.Module):
-    def __init__(self, output_size, input_size, hidden_size, num_layers, sequence_size, batch_size):
+    def __init__(self, output_size, input_size, hidden_size, num_layers, sequence_length, batch_size):
         super(RNN, self).__init__()
         self.output_size = output_size
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        self.sequence_size = sequence_size
+        self.sequence_length = sequence_length
         self.batch_size = batch_size
         
         # self.rnn = nn.LSTM(input_size,hidden_size,num_layers, batch_first=True)
@@ -27,7 +27,5 @@ class RNN(nn.Module):
         rnn_output, _ = self.rnn(inputX)
         rnn_output = rnn_output.contiguous().view(-1, self.hidden_size)
         output = self.mlp(rnn_output)
-        output = output.contiguous().view(self.batch_size, self.sequence_size, -1)
+        output = output.contiguous().view(self.batch_size, self.sequence_length, self.output_size)
         return output
-        
-        
