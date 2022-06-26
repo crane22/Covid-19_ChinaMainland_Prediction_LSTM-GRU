@@ -53,7 +53,7 @@ dataY = dataY.to(device)
 dataPredict = model(dataX)
 lossFunc = torch.nn.MSELoss()
 loss = lossFunc(dataPredict, dataY).item()
-print(loss)
+print("Total loss: ", loss)
 
 # alignment with index
 # numX, numY, numP = np.array(dataX), np.array(dataY), np.array(dataPredict)
@@ -90,3 +90,31 @@ plt.savefig(paths['Output_Figure'])
 plt.show()
 
 # Predict future
+sequenceLength = hyper['SlideWindowSize']
+predictDays = 10
+recursive = plotY[-22:-2]
+predictResult = []
+for i in range(predictDays):
+    recursive = Variable(torch.Tensor(np.array([recursive]))).to("cuda")
+    # print(recursive.size())
+    predict = model(recursive)
+    # print(predict.size())
+    recursive = np.squeeze(np.array(recursive.to("cpu"))).tolist()
+    # print(len(recursive), len(recursive[0]))#, len(recursive[0][0]))
+    predict = np.squeeze(np.array(predict.to("cpu").detach().numpy())).tolist()
+    predictResult.append(predict)
+    recursive.pop()
+    # print(len(recursive), len(recursive[0]))#, len(recursive[0][0]))
+    recursive.append(predict)
+    # print(len(recursive), len(recursive[0]))#, len(recursive[0][0]))
+predictResult_unsqueezed = []
+for d in predictResult:
+    predictResult_unsqueezed.append([d])
+predictResult_unsqueezed = np.array(predictResult_unsqueezed)
+predictFinal = []
+for i in range(predictDays):
+    predictFinal.append(alignedSC[i].inverse_transform(predictResult_unsqueezed[i]))
+predictFinal = np.squeeze(predictFinal)
+print("Prediction 10 days later: ")
+for i in range(predictDays):
+    print(predictFinal[i][0])
